@@ -1,1 +1,2 @@
 chore: Cleanup the README and add a harness section (#766)
+docs: ADR 0001, select OpenTofu for infrastructure as code (#699) (#699)
