@@ -1,0 +1,41 @@
+name: PR Assign
+
+# Assigns each new PR to its author and requests a review from the
+# NASA Science RDR team. pull_request_target gives the token write access on
+# PRs from forks too; this workflow never checks out PR code, so that is safe.
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  assign:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Assign the author
+        # Bots (dependabot, release-please) cannot be assignees.
+        if: github.event.pull_request.user.type != 'Bot'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+        run: |
+          gh api --method POST "repos/$REPO/issues/$PR/assignees" \
+            -f "assignees[]=$AUTHOR" --silent
+
+      - name: Request review from nasa-science-rdr
+        if: '!github.event.pull_request.draft'
+        env:
+          # GITHUB_TOKEN cannot see org teams; a token with read:org is needed
+          # to request a team review. Falls back to GITHUB_TOKEN if unset.
+          GH_TOKEN: ${{ secrets.PR_ASSIGN_TOKEN || github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          gh api --method POST "repos/$REPO/pulls/$PR/requested_reviewers" \
+            -f 'team_reviewers[]=nasa-science-rdr' --silent

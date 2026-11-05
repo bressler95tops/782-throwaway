@@ -1,0 +1,30 @@
+name: Release Please
+
+# Opens (and keeps up to date) a release PR on develop that bumps version.txt
+# and writes CHANGELOG.md from the conventional commit messages. Merging that
+# PR tags the release and publishes a GitHub release.
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          target-branch: develop
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
