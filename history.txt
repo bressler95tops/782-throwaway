@@ -10,3 +10,4 @@ Merge branch 'dev-integration' into feature_x
 docs: describe check severity and completion rules
 test4
 test5
+test7
