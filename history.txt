@@ -5,3 +5,4 @@ test
 test2
 test3
 feat(deposit): hide checks on empty optional fields
+fix(deposit): drop days countdown from file-unlock modal
