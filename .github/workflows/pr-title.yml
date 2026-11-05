@@ -1,0 +1,49 @@
+name: PR Title
+
+# develop is squash-only, so each PR lands as one commit named after its title,
+# and release-please builds CHANGELOG.md from those commits. The title must
+# follow Conventional Commits (https://www.conventionalcommits.org).
+# Promotion PRs (develop -> sandbox -> production) use merge commits and are
+# not checked.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches:
+      - develop
+      - develop-WIP-for-production
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-title-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  title:
+    name: Conventional PR title
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          sparse-checkout: |
+            commitlint.config.mjs
+            .nvmrc
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install commitlint
+        run: npm install --no-save --no-package-lock @commitlint/cli@19.8.1 @commitlint/config-conventional@19.8.1
+
+      - name: Check PR title
+        env:
+          # Passed through env, never interpolated into the script: the title is user input.
+          TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$TITLE" | npx commitlint --verbose
