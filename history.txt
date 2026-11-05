@@ -7,3 +7,4 @@ test3
 feat(deposit): hide checks on empty optional fields
 fix(deposit): drop days countdown from file-unlock modal
 Merge branch 'dev-integration' into feature_x
+docs: describe check severity and completion rules
