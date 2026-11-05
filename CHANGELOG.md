@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/bressler95tops/782-throwaway/compare/v0.1.0...v0.2.0) (2026-11-05)
+
+
+### Features
+
+* real feature hidden by a merge title ([1586aeb](https://github.com/bressler95tops/782-throwaway/commit/1586aeb6338e2944a92f07e6e262acf01fc55840))
+
+
+### Bug Fixes
+
+* **#824:** no green ticks on untriggered checks ([#4](https://github.com/bressler95tops/782-throwaway/issues/4)) ([4e87dd5](https://github.com/bressler95tops/782-throwaway/commit/4e87dd5521fcef76c77b6df0f0a5a9d2f7beb231))
+
 ## 0.1.0 (2026-11-05)
 
 
