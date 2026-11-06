@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/bressler95tops/782-throwaway/compare/v0.3.0...v0.3.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* trigger release pr for ruleset test ([#17](https://github.com/bressler95tops/782-throwaway/issues/17)) ([87b25e7](https://github.com/bressler95tops/782-throwaway/commit/87b25e7978c8a6eebdfa81ed14d1261873521c4c))
+
 ## [0.3.0](https://github.com/bressler95tops/782-throwaway/compare/v0.2.0...v0.3.0) (2026-11-06)
 
 
