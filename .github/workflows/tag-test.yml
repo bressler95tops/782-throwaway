@@ -1,0 +1,10 @@
+name: Tag Test
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  tag:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "tag workflow fired"
